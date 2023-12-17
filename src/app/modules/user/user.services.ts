@@ -72,9 +72,6 @@ const getOrderIntoDB = async (id: string) => {
         _id: 0,
         orders: 1
     })
-    // const result=await User.aggregate([
-    //     {$match:{_id:id}},{$group:{orders:'$orders'}}
-    // ])
     return result
 }
 const getTotalPriceIntoDB = async (id: string) => {
