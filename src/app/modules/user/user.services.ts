@@ -4,8 +4,11 @@ import { TUser } from "./user.interface";
 import { User } from "./user.model";
 
 const createUserIntoDB = async (payload: TUser)=> {
-    const user = await User.create(payload);
-    const {password,...result} =user
+    const result = await User.create(payload);
+    if(result.password){
+       const {password,...filteredData}=result.toObject();
+       return filteredData
+    }
     return result
 }
 

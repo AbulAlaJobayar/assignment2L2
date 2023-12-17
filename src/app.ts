@@ -13,7 +13,7 @@ app.use('/api',userRoute)
 app.get('/', (req: Request, res: Response) => {
 res.json({
     status: 'success',
-    message: 'Course Review server running'
+    message: 'user server running'
   })
 })
 

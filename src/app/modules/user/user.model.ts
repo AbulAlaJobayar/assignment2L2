@@ -16,20 +16,29 @@ const fullNameSchema = new Schema<TFullName>({
 const addressSchema = new Schema<TAddress>({
     street: {
         type: String,
+        required: true,
     },
     city: {
         type: String,
+        required: true,
+    },
+    country:{
+        type: String,
+        required: true,
     }
 }, { _id: false })
 const ordersSchema = new Schema<TOrders>({
     productName: {
         type: String,
+        required: true,
     },
     price: {
         type: Number,
+        required: true,
     },
     quantity: {
         type: Number,
+        required: true,
     }
 }, { _id: false })
 const userSchema = new Schema<TUser>({
@@ -68,6 +77,7 @@ const userSchema = new Schema<TUser>({
     },
     address: {
         type: addressSchema,
+        required: true,
     },
     orders: {
         type: ordersSchema,
@@ -85,8 +95,5 @@ userSchema.pre('save', async function (next) {
     );
     next();
   });
-  userSchema.post('save', function (doc, next) {
-    doc.password = '';
-    next();
-  });
+
 export const User = model<TUser>('User', userSchema)
