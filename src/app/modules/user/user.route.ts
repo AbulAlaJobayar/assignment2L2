@@ -7,6 +7,6 @@ const router= express.Router()
 router.post('/users',userController.createUserIntoDB);
 router.get('/users',userController.getAllUsersFromDb)
 router.get('/users/:userId',userController.gatSingleUserFromDB)
-// router.put('/courses/:courseId',validateRequest(courseValidationSchema.updateCourseValidationSchema),courseController.updateCourseIntoDB);
+router.put('/users/:userId',userController.updateUserIntoDB);
 // router.get('/course/best',courseController.getBestCourseByReviewFromDB)
 export const userRoute=router
