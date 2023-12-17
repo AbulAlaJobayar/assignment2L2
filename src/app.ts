@@ -8,8 +8,6 @@ app.use(express.json())
 app.use(cors())
 
 app.use('/api',userRoute)
-// app.use('/api',categoryRoute)
-// app.use('/api',reviewRoute)
 app.get('/', (req: Request, res: Response) => {
 res.json({
     status: 'success',
