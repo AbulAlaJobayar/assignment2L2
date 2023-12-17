@@ -25,20 +25,28 @@ const getAllUsersFromDB = async () => {
 const getSingleUserFromDB = async (id: string) => {
     const result = await User.findById(id).select({
         _id: 0,
-        userId:1,
+        userId: 1,
         username: 1,
         fullName: 1,
         age: 1,
         email: 1,
-        isActive:1,
-        hobbies:1,
+        isActive: 1,
+        hobbies: 1,
         address: 1,
+    });
+    return result;
+};
+const updateUserIntoDB = async (id: string,userData:Partial<TUser>) => {
+    const result = await User.findByIdAndUpdate(id, userData, {
+        new: true,
+        runValidators: true,
     });
     return result;
 };
 export const userService = {
     createUserIntoDB,
     getAllUsersFromDB,
-    getSingleUserFromDB
+    getSingleUserFromDB,
+    updateUserIntoDB
 
 }
