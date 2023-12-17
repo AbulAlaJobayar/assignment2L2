@@ -2,13 +2,14 @@
 /* eslint-disable prefer-const */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import mongoose from "mongoose";
 import { TOrders, TUser } from "./user.interface";
 import { User } from "./user.model";
 
 const createUserIntoDB = async (payload: TUser) => {
     const result = await User.create(payload);
     if (result.password) {
-        const { password, ...filteredData } = result.toObject();
+        const { password,orders,_id, ...filteredData } = result.toObject();
         return filteredData
     }
     return result
@@ -64,17 +65,40 @@ const createOrderIntoDB = async (id: string, payload: TOrders) => {
     const result = await User.findByIdAndUpdate({ _id: id }, {
         $push: { orders: payload }
     }, { new: true, upsert: true })
-    console.log(result)
     return result
 }
-const getOrderIntoDB=(id:string)=>{
-
+const getOrderIntoDB = async (id: string) => {
+    const result = await User.findById(id).select({
+        _id: 0,
+        orders: 1
+    })
+    // const result=await User.aggregate([
+    //     {$match:{_id:id}},{$group:{orders:'$orders'}}
+    // ])
+    return result
 }
+const getTotalPriceIntoDB = async (id: string) => {
+
+    const user = await User.findById(id)
+    if (!user?.orders) {
+        throw new Error("order cannot found")
+    }
+    else if (user?.orders) {
+        const result = user.orders?.reduce((sum, order) => sum + order.price * order.quantity, 0)
+        return { totalPrice: result }
+    }
+  
+
+    return user.orders
+}
+
 export const userService = {
     createUserIntoDB,
     getAllUsersFromDB,
     getSingleUserFromDB,
     updateUserIntoDB,
     deleteUserFromDB,
-    createOrderIntoDB
+    createOrderIntoDB,
+    getOrderIntoDB,
+    getTotalPriceIntoDB
 }
