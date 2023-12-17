@@ -37,26 +37,26 @@ const getAllUsersFromDb = async (req: Request, res: Response) => {
     });
   }
 };
-// const gateSingleUser = async (req: Request, res: Response) => {
-//   try {
-//     const id = req.params.userId;
-//     const result = await userServices.getSingleUser(id);
-//     res.status(201).json({
-//       success: true,
-//       message: 'User fetched successfully!',
-//       data: result,
-//     });
-//   } catch (error: any) {
-//     res.status(404).json({
-//       success: false,
-//       message: 'User not found',
-//       error: {
-//         code: 404,
-//         description: 'User not found!',
-//       },
-//     });
-//   }
-// };
+const gatSingleUserFromDB = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.userId;
+    const result = await userService.getSingleUserFromDB(id);
+    res.status(200).json({
+      success: true,
+      message: 'User fetched successfully!',
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(404).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!'
+      },
+    });
+  }
+};
 // const updateUser = async (req: Request, res: Response) => {
 //   try {
 //     const id = req.params.userId;
@@ -163,8 +163,8 @@ const getAllUsersFromDb = async (req: Request, res: Response) => {
 
 export const userController = {
     createUserIntoDB,
-    getAllUsersFromDb
-  //gateSingleUser,
+    getAllUsersFromDb,
+    gatSingleUserFromDB
   //updateUser,
   //deleteUser,
   //updateOrder,
