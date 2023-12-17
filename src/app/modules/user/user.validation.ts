@@ -10,9 +10,9 @@ const addressValidation = z.object({
   country: z.string(),
 });
 const ordersValidation = z.object({
-  productName: z.string().optional(),
-  price: z.number().optional(),
-  quantity: z.number().optional(),
+  productName: z.string(),
+  price: z.number(),
+  quantity: z.number(),
 });
 
 const userValidation = z.object({
