@@ -12,7 +12,7 @@ const createUserIntoDB = async (req: Request, res: Response) => {
     const zodValidation = userValidation.createUserValidation.parse(data);
     const result = await userService.createUserIntoDB(zodValidation);
     res.status(httpStatus.CREATED).json({
-      success:  true,
+      success: true,
       message: 'User created successfully!',
       data: result,
     });
@@ -20,7 +20,7 @@ const createUserIntoDB = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: error.message || 'something went to wrong',
-      
+
     });
   }
 };
@@ -64,7 +64,7 @@ const updateUserIntoDB = async (req: Request, res: Response) => {
     const id = req.params.userId;
     const data = req.body;
     const zodValidation = userValidation.updateUserValidation.parse(data);
-    const result = await userService.updateUserIntoDB (id,zodValidation);
+    const result = await userService.updateUserIntoDB(id, zodValidation);
     res.status(200).json({
       success: true,
       message: 'User updated successfully!',
@@ -88,7 +88,7 @@ const deleteUserFromDB = async (req: Request, res: Response) => {
     res.status(200).json({
       success: true,
       message: 'User deleted successfully!',
-      data:null,
+      data: null,
     });
   } catch (error: any) {
     res.status(404).json({
@@ -102,27 +102,27 @@ const deleteUserFromDB = async (req: Request, res: Response) => {
   }
 };
 
-// const updateOrder = async (req: Request, res: Response) => {
-//   try {
-//     const id = req.params.userId;
-//     const data = req.body;
-//     const result = await userServices.updateOrder(id, data);
-//     res.status(201).json({
-//       success: true,
-//       message: 'Order created successfully!"',
-//       data: null,
-//     });
-//   } catch (error: any) {
-//     res.status(404).json({
-//       success: false,
-//       message: 'User not found',
-//       error: {
-//         code: 404,
-//         description: 'User not found!',
-//       },
-//     });
-//   }
-// };
+const createOrderIntoDB = async (req: Request, res: Response) => {
+  try {
+    const {userId} = req.params;
+    const data = req.body;
+   await userService.createOrderIntoDB(userId, data);
+    res.status(201).json({
+      success: true,
+      message: 'Order created successfully!',
+      data: null,
+    });
+  } catch (error: any) {
+    res.status(404).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
+    });
+  }
+};
 // const getAllOrder = async (req: Request, res: Response) => {
 //   try {
 //     const id = req.params.userId;
@@ -165,9 +165,10 @@ const deleteUserFromDB = async (req: Request, res: Response) => {
 // };
 
 export const userController = {
-    createUserIntoDB,
-    getAllUsersFromDb,
-    gatSingleUserFromDB,
-    updateUserIntoDB,
-    deleteUserFromDB
+  createUserIntoDB,
+  getAllUsersFromDb,
+  gatSingleUserFromDB,
+  updateUserIntoDB,
+  deleteUserFromDB,
+  createOrderIntoDB
 };

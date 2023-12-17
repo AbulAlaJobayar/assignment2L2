@@ -80,7 +80,7 @@ const userSchema = new Schema<TUser>({
         required: true,
     },
     orders: {
-        type: ordersSchema,
+        type: [ordersSchema],
         required: false
     }
 }, {

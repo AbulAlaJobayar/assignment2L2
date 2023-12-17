@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable prefer-const */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { TUser } from "./user.interface";
+import { TOrders, TUser } from "./user.interface";
 import { User } from "./user.model";
 
 const createUserIntoDB = async (payload: TUser) => {
@@ -53,15 +55,26 @@ const updateUserIntoDB = async (id: string, userData: Partial<TUser | unknown>) 
     });
     return result;
 };
-const deleteUserFromDB = async (id: string)=> {
+const deleteUserFromDB = async (id: string) => {
     const result = await User.findByIdAndDelete(id);
     return result;
 };
+
+const createOrderIntoDB = async (id: string, payload: TOrders) => {
+    const result = await User.findByIdAndUpdate({ _id: id }, {
+        $push: { orders: payload }
+    }, { new: true, upsert: true })
+    console.log(result)
+    return result
+}
+const getOrderIntoDB=(id:string)=>{
+
+}
 export const userService = {
     createUserIntoDB,
     getAllUsersFromDB,
     getSingleUserFromDB,
     updateUserIntoDB,
-    deleteUserFromDB
-
+    deleteUserFromDB,
+    createOrderIntoDB
 }

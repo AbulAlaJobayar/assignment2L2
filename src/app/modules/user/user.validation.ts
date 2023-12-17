@@ -9,11 +9,11 @@ const createAddressValidation = z.object({
   city: z.string(),
   country: z.string(),
 });
-const createOrdersValidation = z.object({
+/*const createOrdersValidation = z.object({
   productName: z.string(),
   price: z.number(),
   quantity: z.number(),
-});
+});*/
 
 const createUserValidation = z.object({
   userId: z.number(),
@@ -25,7 +25,7 @@ const createUserValidation = z.object({
   isActive: z.boolean().default(true),
   hobbies: z.array(z.string()),
   address: createAddressValidation,
-  orders: createOrdersValidation.optional(),
+  //orders:z.array(createOrdersValidation).optional(),
 });
 
 
@@ -40,11 +40,11 @@ const updateFullNameValidation = z.object({
     city: z.string().optional(),
     country: z.string().optional(),
   });
-  const updateOrdersValidation = z.object({
+  /*const updateOrdersValidation = z.object({
     productName: z.string().optional(),
     price: z.number().optional(),
     quantity: z.number().optional(),
-  });
+  });*/
   
   const updateUserValidation = z.object({
     userId: z.number().optional(),
@@ -56,7 +56,7 @@ const updateFullNameValidation = z.object({
     isActive: z.boolean().default(true).optional(),
     hobbies: z.array(z.string()).optional(),
     address: updateAddressValidation.optional(),
-    orders: updateOrdersValidation.optional(),
+    //orders:z.array(updateOrdersValidation).optional(),
   });
 export const userValidation = {
     createUserValidation,

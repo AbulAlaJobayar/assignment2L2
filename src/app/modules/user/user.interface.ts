@@ -23,6 +23,6 @@ export type TFullName ={
     isActive:boolean;
     hobbies: string[];
     address: TAddress;
-    orders?: TOrders;
+    orders?: TOrders[];
   }
   
