@@ -36,7 +36,7 @@ const getSingleUserFromDB = async (id: string) => {
     });
     return result;
 };
-const updateUserIntoDB = async (id: string,userData:Partial<TUser|unknown>) => {
+const updateUserIntoDB = async (id: string, userData: Partial<TUser | unknown>) => {
     const result = await User.findByIdAndUpdate(id, userData, {
         new: true,
         runValidators: true,
@@ -53,10 +53,15 @@ const updateUserIntoDB = async (id: string,userData:Partial<TUser|unknown>) => {
     });
     return result;
 };
+const deleteUserFromDB = async (id: string)=> {
+    const result = await User.findByIdAndDelete(id);
+    return result;
+};
 export const userService = {
     createUserIntoDB,
     getAllUsersFromDB,
     getSingleUserFromDB,
-    updateUserIntoDB
+    updateUserIntoDB,
+    deleteUserFromDB
 
 }
