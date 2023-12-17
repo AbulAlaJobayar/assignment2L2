@@ -20,6 +20,7 @@ const createUserIntoDB = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: error.message || 'something went to wrong',
+      
     });
   }
 };
@@ -80,26 +81,26 @@ const updateUserIntoDB = async (req: Request, res: Response) => {
     });
   }
 };
-// const deleteUser = async (req: Request, res: Response) => {
-//   try {
-//     const id = req.params.userId;
-//     await userServices.deleteUser(id);
-//     res.status(201).json({
-//       success: true,
-//       message: 'User deleted successfully!!',
-//       data: null,
-//     });
-//   } catch (error: any) {
-//     res.status(500).json({
-//       success: false,
-//       message: 'User not found',
-//       error: {
-//         code: 404,
-//         description: 'User not found!',
-//       },
-//     });
-//   }
-// };
+const deleteUserFromDB = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.userId;
+    await userService.deleteUserFromDB(id);
+    res.status(200).json({
+      success: true,
+      message: 'User deleted successfully!',
+      data:null,
+    });
+  } catch (error: any) {
+    res.status(404).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
+    });
+  }
+};
 
 // const updateOrder = async (req: Request, res: Response) => {
 //   try {
@@ -167,10 +168,6 @@ export const userController = {
     createUserIntoDB,
     getAllUsersFromDb,
     gatSingleUserFromDB,
-    updateUserIntoDB
-  //updateUser,
-  //deleteUser,
-  //updateOrder,
-  //getAllOrder,
-  //totalPrice,
+    updateUserIntoDB,
+    deleteUserFromDB
 };
