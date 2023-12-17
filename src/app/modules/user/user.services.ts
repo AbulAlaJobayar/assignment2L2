@@ -36,7 +36,7 @@ const getSingleUserFromDB = async (id: string) => {
     });
     return result;
 };
-const updateUserIntoDB = async (id: string,userData:Partial<TUser>) => {
+const updateUserIntoDB = async (id: string,userData:Partial<TUser|unknown>) => {
     const result = await User.findByIdAndUpdate(id, userData, {
         new: true,
         runValidators: true,
