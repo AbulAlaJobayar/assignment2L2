@@ -24,8 +24,8 @@ const createUserIntoDB = async (req: Request, res: Response) => {
 };
 const getAllUsersFromDb = async (req: Request, res: Response) => {
   try {
-    const result = await userServices.getAllUsers();
-    res.status(201).json({
+    const result = await userService.getAllUsersFromDB();
+    res.status(200).json({
       success: true,
       message: 'Users fetched successfully!',
       data: result,
@@ -34,10 +34,6 @@ const getAllUsersFromDb = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: error.message || 'Users not found',
-      error: {
-        code: 404,
-        description: 'Users not found!',
-      },
     });
   }
 };
@@ -167,7 +163,7 @@ const getAllUsersFromDb = async (req: Request, res: Response) => {
 
 export const userController = {
     createUserIntoDB,
-  //getAllUsers,
+    getAllUsersFromDb
   //gateSingleUser,
   //updateUser,
   //deleteUser,
