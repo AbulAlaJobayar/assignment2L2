@@ -25,8 +25,9 @@ const getAllUsersFromDB = async () => {
     });
     return result;
 }
-const getSingleUserFromDB = async (id: string) => {
-    const result = await User.findById(id).select({
+const getSingleUserFromDB = async (userId: string) => {
+  
+    const result = await User.findOne({userId}).select({
         _id: 0,
         userId: 1,
         username: 1,
@@ -39,8 +40,8 @@ const getSingleUserFromDB = async (id: string) => {
     });
     return result;
 };
-const updateUserIntoDB = async (id: string, userData: Partial<TUser | unknown>) => {
-    const result = await User.findByIdAndUpdate(id, userData, {
+const updateUserIntoDB = async (userId: string, userData: Partial<TUser | unknown>) => {
+    const result = await User.findOneAndUpdate({userId}, userData, {
         new: true,
         runValidators: true,
     }).select({
@@ -56,27 +57,27 @@ const updateUserIntoDB = async (id: string, userData: Partial<TUser | unknown>) 
     });
     return result;
 };
-const deleteUserFromDB = async (id: string) => {
-    const result = await User.findByIdAndDelete(id);
+const deleteUserFromDB = async (userId: string) => {
+    const result = await User.findOneAndDelete({userId});
     return result;
 };
 
-const createOrderIntoDB = async (id: string, payload: TOrders) => {
-    const result = await User.findByIdAndUpdate({ _id: id }, {
+const createOrderIntoDB = async (userId: string, payload: TOrders) => {
+    const result = await User.findOneAndUpdate({userId}, {
         $push: { orders: payload }
     }, { new: true, upsert: true })
     return result
 }
-const getOrderIntoDB = async (id: string) => {
-    const result = await User.findById(id).select({
+const getOrderIntoDB = async (userId: string) => {
+    const result = await User.findOne({userId}).select({
         _id: 0,
         orders: 1
     })
     return result
 }
-const getTotalPriceIntoDB = async (id: string) => {
+const getTotalPriceIntoDB = async (userId: string) => {
 
-    const user = await User.findById(id)
+    const user = await User.findOne({userId})
     if (!user?.orders) {
         throw new Error("order cannot found")
     }
